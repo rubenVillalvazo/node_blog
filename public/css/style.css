@@ -339,6 +339,9 @@ img {
     padding: 15px;
 }
 
+#searchClose:hover {
+    cursor: pointer;
+}
 
 .pagination {
     font-size: 1.3rem;
