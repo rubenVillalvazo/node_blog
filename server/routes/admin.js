@@ -76,7 +76,13 @@ router.post('/admin', async (req, res) => {
 */
 router.get('/dashboard', authMiddleware, async (req, res) => {
     try {
-        res.render('admin/dashboard');
+        const locals = {
+            title: 'Admin control page',
+            description: 'Posts CRUD'
+        }
+
+        const data = await Post.find();
+        res.render('admin/dashboard', { data, locals, layout: adminLayout });
     } catch (error) {
         console.log(error);
     }
