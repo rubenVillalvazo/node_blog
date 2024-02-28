@@ -1,0 +1,5 @@
+- Modificar el header-admin para incluir el boton de redireccionamiento al dashboard.
+- modificar la pagina de login para que cen caso de intentar entrar en ella de nuevo ser redireccionado al dashboard. 
+- Incluir boton de login en el header?
+
+---- CASO EL USUARIO ESTE LOGADO MOSTRAR EL HEADER DEL ADMIN, PORQUE AL NAVEGAR ENTRE LAS PAGINAS DEL PROYECTO SE PIERDE CONTINUIDAD, ESTO SUCEDE POR EJEMPLO SI EL ADMINISTRADOR VISITA UN POST, VE EL HEADER COMUN SIN LAS OPCIONES DE ADMIN

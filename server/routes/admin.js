@@ -109,6 +109,47 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
 });
 
 /*
+ **** GET/ADMIN - CREATE NEW POST ****
+*/
+router.get('/add-posts', authMiddleware, async (req, res) => {
+    try {
+        const locals = {
+            title: 'Create new post',
+            description: ''
+        }
+
+        const data = Post.find();
+
+        res.render('admin/add-post', { data, locals, layout: adminLayout })
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+/*
+ **** POST/ADMIN - CREATE NEW POST ****
+*/
+router.post('/add-post', authMiddleware, async (req, res) => {
+    try {
+
+        try {
+            const newPost = new Post({
+                title: req.body.title,
+                body: req.body.body
+            })
+
+            await Post.create(newPost);
+
+            res.redirect('/dashboard');
+        } catch (error) {
+            console.log(error);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+/*
  **** POST/ADMIN - REGISTER ****
 */
 // router.post('/register', async (req, res) => {
