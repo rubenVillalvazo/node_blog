@@ -156,25 +156,27 @@ router.post('/add-post', authMiddleware, async (req, res) => {
 /*
  **** GET/ADMIN - UPDATE POST ****
 */
-router.get('/edit-post:id', authMiddleware, async (req, res) => {
+router.get('/edit-post/:id', authMiddleware, async (req, res) => {
     try {
+
         const locals = {
             title: "Edit Post",
-            description: ""
-        }
+            description: "Free NodeJs User Management System",
+        };
 
         const data = await Post.findOne({ _id: req.params.id });
-        console.log(data);
 
-        res.render('admin/edit-post-teste', {
-            data,
+        res.render('admin/edit-post', {
             locals,
+            data,
             layout: adminLayout
-        });
+        })
+
     } catch (error) {
         console.log(error);
     }
-})
+
+});
 
 /*
  **** PUT/ADMIN - EDIT POST ****
