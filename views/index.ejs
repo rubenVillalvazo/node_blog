@@ -29,4 +29,8 @@
         <a href="/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>     
     <% } %>
 
+    <% if (previousPage !== null) { %>
+        <a href="/?page=<%= previousPage %>" class="pagination">View Newer Posts &gt; </a>
+    <% } %>
+
 </section>

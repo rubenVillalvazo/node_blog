@@ -3,18 +3,28 @@
     <a href="/add-posts" class="btn">+ Add New</a>
 </div>
 
-<ul class="admin-posts">
-    <% data.forEach(post => { %>
-        <li>
-            <a href="/post/<%= post._id %>">
-                <%= post.title %> &nearr;
-            </a>
-            <div class="admin-post-controls">
-                <a href="/edit-post/<%= post._id %>" class="btn">Edit</a>
-                <form action="/delete-post/<%= post._id %>?_method=DELETE" method="post">
-                    <input type="submit" value="Delet" class="btn">
-                </form>
-            </div>
-        </li>
-    <% }) %>
-</ul>
+<section>
+    <ul class="admin-posts">
+        <% data.forEach(post => { %>
+            <li>
+                <a href="/post/<%= post._id %>">
+                    <%= post.title %> &nearr;
+                </a>
+                <div class="admin-post-controls">
+                    <a href="/edit-post/<%= post._id %>" class="btn">Edit</a>
+                    <form action="/delete-post/<%= post._id %>?_method=DELETE" method="post">
+                        <input type="submit" value="Delet" class="btn">
+                    </form>
+                </div>
+            </li>
+        <% }) %>
+    </ul>
+
+    <% if (nextPage !== null) { %>
+        <a href="/dashboard/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>     
+    <% } %>
+
+    <% if (previousPage !== null) { %>
+        <a href="/dashboard/?page=<%= previousPage %>" class="pagination">View Newer Posts &gt; </a>
+    <% } %>
+</section>

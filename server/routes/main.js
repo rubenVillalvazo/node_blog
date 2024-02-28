@@ -14,6 +14,7 @@ router.get('', async (req, res) => {
 
         let perPage = 10;
         let page = req.query.page || 1;
+        page = parseInt(page);
 
         const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
             .skip(perPage * page - perPage)
@@ -21,14 +22,16 @@ router.get('', async (req, res) => {
             .exec();
 
         const count = await Post.countDocuments();
-        const nextPage = parseInt(page) + 1;
+        const nextPage = page + 1;
         const hasNextPage = nextPage <= Math.ceil(count / perPage);
+        const hasPreviousPage = page > 1;
 
         res.render('index', {
             locals,
             data,
             current: page,
-            nextPage: hasNextPage ? nextPage : null
+            nextPage: hasNextPage ? nextPage : null,
+            previousPage: hasPreviousPage ? page - 1 : null
         });
     } catch (error) {
         console.log(error);

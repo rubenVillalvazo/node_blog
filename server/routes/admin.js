@@ -37,7 +37,7 @@ router.get('/admin', async (req, res) => {
             description: "Here you can control de blog"
         }
 
-        res.render('admin/index', { locals, layout: adminLayout })
+        res.render('admin/index', { locals })
     } catch (error) {
         console.log(error);
     }
@@ -81,8 +81,28 @@ router.get('/dashboard', authMiddleware, async (req, res) => {
             description: 'Posts CRUD'
         }
 
-        const data = await Post.find();
-        res.render('admin/dashboard', { data, locals, layout: adminLayout });
+        let perPage = 10;
+        let page = req.query.page || 1;
+        page = parseInt(page);
+
+        const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
+            .skip(perPage * page - perPage)
+            .limit(perPage)
+            .exec();
+
+        const count = await Post.countDocuments();
+        const nextPage = page + 1;
+        const hasNextPage = nextPage <= Math.ceil(count / perPage);
+        const hasPreviousPage = page > 1;
+
+        res.render('admin/dashboard', {
+            data,
+            locals,
+            layout: adminLayout,
+            current: page,
+            nextPage: hasNextPage ? nextPage : null,
+            previousPage: hasPreviousPage ? page - 1 : null
+        });
     } catch (error) {
         console.log(error);
     }
