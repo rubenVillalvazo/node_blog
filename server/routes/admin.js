@@ -120,7 +120,11 @@ router.get('/add-posts', authMiddleware, async (req, res) => {
 
         const data = Post.find();
 
-        res.render('admin/add-post', { data, locals, layout: adminLayout })
+        res.render('admin/add-post', {
+            data,
+            locals,
+            layout: adminLayout
+        })
     } catch (error) {
         console.log(error);
     }
@@ -147,6 +151,49 @@ router.post('/add-post', authMiddleware, async (req, res) => {
     } catch (error) {
         console.log(error);
     }
+});
+
+/*
+ **** GET/ADMIN - UPDATE POST ****
+*/
+router.get('/edit-post:id', authMiddleware, async (req, res) => {
+    try {
+        const locals = {
+            title: "Edit Post",
+            description: ""
+        }
+
+        const data = await Post.findOne({ _id: req.params.id });
+        console.log(data);
+
+        res.render('admin/edit-post-teste', {
+            data,
+            locals,
+            layout: adminLayout
+        });
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+/*
+ **** PUT/ADMIN - EDIT POST ****
+*/
+router.put('/edit-post/:id', authMiddleware, async (req, res) => {
+    try {
+
+        await Post.findByIdAndUpdate(req.params.id, {
+            title: req.body.title,
+            body: req.body.body,
+            updatedAt: Date.now()
+        });
+
+        res.redirect(`/edit-post/${req.params.id}`);
+
+    } catch (error) {
+        console.log(error);
+    }
+
 });
 
 /*
