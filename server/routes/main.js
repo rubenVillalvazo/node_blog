@@ -31,7 +31,8 @@ router.get('', async (req, res) => {
             data,
             current: page,
             nextPage: hasNextPage ? nextPage : null,
-            previousPage: hasPreviousPage ? page - 1 : null
+            previousPage: hasPreviousPage ? page - 1 : null,
+            currentRoute: '/'
         });
     } catch (error) {
         console.log(error);
@@ -51,7 +52,11 @@ router.get('/post/:id', async (req, res) => {
             title: data.title,
         }
 
-        res.render('post', { locals, data });
+        res.render('post', {
+            locals,
+            data,
+            currentRoute: `/post/${slug}`
+        });
     } catch (error) {
         console.log(error);
     }
@@ -77,18 +82,22 @@ router.post('/search', async (req, res) => {
                 { body: { $regex: new RegExp(searchNoSpecialChar, 'i') } }
             ]
         });
-        res.render("search", { data, locals });
+        res.render("search", {
+            data,
+            locals,
+            currentRoute: '/search'
+        });
     } catch (error) {
         console.log(error);
     }
 })
 
 router.get('/about', (req, res) => {
-    res.render('about');
+    res.render('about', { currentRoute: '/about' });
 });
 
 router.get('/contact', (req, res) => {
-    res.render('contact');
+    res.render('contact', { currentRoute: '/contact' });
 });
 
 // function insertPostData() {

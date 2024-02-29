@@ -199,6 +199,37 @@ router.put('/edit-post/:id', authMiddleware, async (req, res) => {
 });
 
 /*
+ **** DELETE/ADMIN - DELETE POST ****
+*/
+router.delete('/delete-post/:id', authMiddleware, async (req, res) => {
+    try {
+
+        await Post.deleteOne({ _id: req.params.id });
+
+        res.redirect('/dashboard');
+
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+/*
+ **** GET/ADMIN - LOGOUT ****
+*/
+router.get('/logout', authMiddleware, async (req, res) => {
+    try {
+        res.clearCookie('token');
+        res.redirect('/');
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+
+
+/*
  **** POST/ADMIN - REGISTER ****
 */
 // router.post('/register', async (req, res) => {
